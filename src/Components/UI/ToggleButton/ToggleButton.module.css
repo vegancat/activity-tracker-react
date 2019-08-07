@@ -1,0 +1,14 @@
+.ToggleButton {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 2rem;
+    width: 100%;
+}
+
+.Slice {
+    height: 0.15rem;
+    width: 2rem;
+    background-color: black;
+}

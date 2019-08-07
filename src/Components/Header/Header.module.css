@@ -1,0 +1,34 @@
+.Header {
+    position: fixed;
+    width: 100%;
+    height: 3rem;
+    top: 0;
+    left: 0;
+    background-color: lightblue;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.Links {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.LogoContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.LogoContainer div {
+    margin: 0 0.5rem;
+}
+
+.ToggleButton {
+    width: 2rem;
+    cursor: pointer;
+    border: none;
+    background: none;
+}
