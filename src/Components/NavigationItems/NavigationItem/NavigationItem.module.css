@@ -1,3 +1,11 @@
 .Link {
     text-decoration: none;
+    color: black;
+    margin: 0 0.5rem;
+}
+
+.Link:hover,
+.Link:active,
+.Link.active {
+    color: #e6770f;
 }

@@ -1,5 +1,7 @@
+import * as actionTypes from "../actions/actionTypes";
+
 const initialState = {
-    test: 1
+    dates: []
 };
 
 const reducer = (state = initialState, action) => {

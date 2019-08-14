@@ -6,6 +6,7 @@
     width: 40%;
     background-color: white;
     z-index: 60;
+    transition: all 0.2s linear;
 }
 
 .Logo {
@@ -20,5 +21,5 @@
 }
 
 .Close {
-    display: none;
+    transform: translateX(-100%);
 }

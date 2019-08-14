@@ -8,12 +8,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    z-index: 30;
 }
 
 .Links {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+    display: none;
 }
 
 .LogoContainer {
@@ -31,4 +30,16 @@
     cursor: pointer;
     border: none;
     background: none;
+}
+
+@media (min-width: 26rem) {
+    .ToggleButton {
+        display: none;
+    }
+
+    .Links {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
 }

@@ -1,0 +1,41 @@
+.Footer {
+    position: relative;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+.Footer ul {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.Footer ul li {
+    margin-bottom: 0.5rem;
+}
+
+.Footer ul li a {
+    text-decoration: none;
+    color: white;
+}
+
+.Footer ul li a:active,
+.Footer ul li a:hover,
+.Footer ul li a.active {
+    color: yellow;
+}
+
+@media (min-width: 26rem) {
+    .Footer ul {
+        flex-direction: row;
+    }
+
+    .Footer ul li {
+        margin: 0 1rem;
+    }
+}

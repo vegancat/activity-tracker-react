@@ -1,0 +1,107 @@
+.Container {
+    margin: 4rem auto;
+    width: 80%;
+    background-color: #9beb98;
+    box-shadow: 0 5px 5px #ccc;
+}
+
+.Spinner {
+    width: 100%;
+    margin: 10rem auto 12rem auto;
+}
+
+.Form {
+    padding: 0.7rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.Form label {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.Form input,
+.Form label,
+.Form select {
+    display: block;
+    margin-bottom: 0.4rem;
+    width: 100%;
+}
+
+.Form input,
+.Form select {
+    padding: 0.3rem;
+    border-radius: 5px;
+    font-family: "open sans", sans-serif;
+    font-size: 1rem;
+}
+
+.Input {
+    border: none;
+}
+
+.Valid {
+    border: 2px solid green;
+}
+
+.InValid {
+    border: 2px solid red;
+    background: #fda9a9;
+}
+
+.Form input:focus,
+.Form select:focus {
+    outline: none;
+}
+
+.SignUp {
+    align-self: center;
+    padding: 0.5rem;
+    background-color: #ffbb00;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-top: 1rem;
+    font-weight: bold;
+    font-size: 1.4rem;
+    outline: none;
+    cursor: pointer;
+}
+
+.SignUp:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.Description {
+    border: 2px solid #ffbb00;
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 5px;
+    background: plum;
+}
+
+/* @media (min-width: 25rem) {
+    .Container {
+        width: 50%;
+    }
+} */
+@media (min-width: 26rem) {
+    .Form {
+        padding: 2rem;
+    }
+}
+
+@media (min-width: 43.75rem) {
+    .Container {
+        width: 50%;
+    }
+}
+
+@media (min-width: 65.625rem) {
+    .Container {
+        width: 32.8125rem;
+    }
+}

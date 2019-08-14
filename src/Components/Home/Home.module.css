@@ -1,0 +1,103 @@
+.Container {
+    position: relative;
+    top: 0;
+    left: 0;
+    margin-top: 0;
+    background-color: #ffe1b4;
+    width: 100%;
+    height: 100%;
+}
+
+.IntroBackground {
+    width: 100%;
+    height: 17rem;
+    background-image: url("../../assets/images/background/laptop-background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: right top;
+
+    font-size: 1.3rem;
+    text-align: center;
+    color: black;
+    padding: 2rem;
+}
+
+.Description {
+    width: 100%;
+    background-color: white;
+    padding: 1rem;
+    margin-top: 0;
+}
+
+.Title {
+    text-align: center;
+    color: #6a6af1;
+}
+
+.Text {
+    font-size: 1.1rem;
+    font-family: "Red Hat Display", sans-serif;
+    border: 1px solid black;
+    background-color: rgb(194, 240, 236);
+    margin: 0 auto;
+    padding: 0.2rem 1rem;
+    box-shadow: 0 4px 4px #030303;
+}
+
+.Peoples {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.People {
+    width: 100%;
+    background-color: #ffe1b4;
+    box-shadow: 0 3px 2px #030303;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0.5rem;
+    margin: 1rem auto;
+}
+
+.People__Name {
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.People__Message__Container {
+    border: 1px solid black;
+    margin-left: 1rem;
+    padding: 0.3rem 0.7rem;
+    width: 100%;
+    background-color: #f2fa81;
+}
+
+.People__Message {
+    font-family: "Josefin Sans", sans-serif;
+    font-size: 1.3rem;
+}
+
+@media (min-width: 43.75rem) {
+    .IntroBackground {
+        font-size: 3rem;
+        height: 35rem;
+    }
+
+    .Text {
+        width: 41rem;
+    }
+}
+
+@media (min-width: 77.625rem) {
+    .Peoples {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .People {
+        margin: 1rem 1rem;
+    }
+}

@@ -1,0 +1,64 @@
+.Container {
+    position: relative;
+    top: 6rem;
+    margin-bottom: 9rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    border: 2px solid black;
+    box-shadow: 2px 8px 5px #ccc;
+    background-color: white;
+    padding: 0.5rem;
+
+    width: 80%;
+    border-radius: 5px;
+}
+
+.Form input,
+.Form label,
+.Form button {
+    font-family: "open sans", sans-serif;
+}
+
+.Form label {
+    font-weight: bold;
+}
+
+.Input {
+    margin: 0.2rem 0;
+    font-size: 1rem;
+    padding: 0.3rem;
+    width: 100%;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
+.Form button {
+    align-self: center;
+    padding: 0.2rem;
+    font-weight: bold;
+    font-size: 1.2rem;
+    background-color: lightskyblue;
+    border: 1px solid black;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+}
+
+@media (min-width: 26rem) {
+}
+
+@media (min-width: 43.75rem) {
+    .Form {
+        width: 35rem;
+    }
+}

@@ -1,19 +1,29 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { createStore, combineReducers, applyMiddleware } from "redux";
+import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
+import thunk from "redux-thunk";
 
 import "./index.css";
 import App from "./App";
-import root from "./store/reducers/root";
+import dates from "./store/reducers/dates";
+import chains from "./store/reducers/chains";
+import auth from "./store/reducers/auth";
 import * as serviceWorker from "./serviceWorker";
 
 const rootReducer = combineReducers({
-    root: root
+    chains: chains,
+    dates: dates,
+    auth: auth
 });
 
-const store = createStore(rootReducer);
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(
+    rootReducer,
+    composeEnhancers(applyMiddleware(thunk))
+);
 
 const app = (
     <BrowserRouter>
