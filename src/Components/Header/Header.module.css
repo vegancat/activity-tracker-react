@@ -25,6 +25,21 @@
     margin: 0 0.5rem;
 }
 
+.LogoMainContainer {
+    height: 3rem;
+    width: 3.2rem;
+}
+
+.LogoLink {
+    display: block;
+    height: 100%;
+}
+
+.Logo {
+    height: 100%;
+    width: 100%;
+}
+
 .ToggleButton {
     width: 2rem;
     cursor: pointer;

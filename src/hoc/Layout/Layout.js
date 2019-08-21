@@ -14,7 +14,7 @@ class Layout extends Component {
 
     render() {
         return (
-            <div>
+            <div className={classes.Layout}>
                 <Header onToggleButton={this.toggleButtonClickHandler} />
                 <BackDrop
                     show={this.state.backdrop}

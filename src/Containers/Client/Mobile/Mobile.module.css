@@ -1,0 +1,91 @@
+.Container {
+    position: relative;
+}
+
+.ChainName {
+    width: 100%;
+    padding: 1rem;
+    text-align: center;
+    font-size: 1.4rem;
+    font-family: "Open Sans", sans-serif;
+    border-radius: 5px;
+    border: 1px solid black;
+    outline: none;
+}
+
+.ChainColors {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem auto;
+}
+
+.ChainColor {
+    width: 2rem;
+    height: 2rem;
+    border: 2px solid transparent;
+    margin: 0 0.3rem;
+}
+
+.ActiveColor {
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.AddChainSubmitButton {
+    outline: none;
+    width: 6rem;
+    font-family: "Open Sans", sans-serif;
+    font-size: 1.6rem;
+    font-weight: bold;
+    border-radius: 6px;
+    text-align: center;
+}
+
+.SelectChain {
+    position: sticky;
+    display: flex;
+    bottom: 2rem;
+    margin: 2rem auto 2rem auto;
+    border-radius: 40px 0 0 40px;
+    width: 95%;
+    height: 4rem;
+    background: white;
+    box-shadow: 3px 6px 4px #ccc;
+}
+
+.Chains {
+    width: 87%;
+    height: 100%;
+    border-radius: 40px 0 0 40px;
+    border: 1px solid black;
+    border-right: 1px dashed black;
+    text-align: center;
+}
+
+.SelectButtonContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 13%;
+    height: 100%;
+    border: 1px solid black;
+    border-left: none;
+}
+
+.SelectButton {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+}
+
+.PlusSign {
+    font-size: 1.5rem;
+    display: block;
+    font-size: 3rem;
+    text-align: center;
+    line-height: 95%;
+}

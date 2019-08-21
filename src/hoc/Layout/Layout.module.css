@@ -1,0 +1,13 @@
+.Layout {
+    display: grid;
+    grid-template-rows:
+        [row-1-start] 3rem [row-1-end row-2-start] auto [row-2-end row-3-start] fit-content(
+            3.3rem
+        )
+        [row-3-end];
+    grid-template-columns: [column-1-start] 100% [column-1-end];
+    grid-template-areas:
+        "header"
+        "main"
+        "footer";
+}

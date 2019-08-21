@@ -1,6 +1,6 @@
 .Container {
     position: relative;
-    top: 6rem;
+    top: 1rem;
     margin-bottom: 9rem;
     width: 100%;
     display: flex;
@@ -17,8 +17,7 @@
     box-shadow: 2px 8px 5px #ccc;
     background-color: white;
     padding: 0.5rem;
-
-    width: 80%;
+    width: 90%;
     border-radius: 5px;
 }
 
@@ -60,5 +59,9 @@
 @media (min-width: 43.75rem) {
     .Form {
         width: 35rem;
+    }
+
+    .Form label {
+        font-size: 1.2rem;
     }
 }

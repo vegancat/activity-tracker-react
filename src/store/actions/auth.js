@@ -1,8 +1,10 @@
 import * as actionTypes from "./actionTypes";
 import axios from "axios";
+import { logicalExpression } from "@babel/types";
 
-let API_KEY;
+let API_KEY = "for security i'm not gonna release it :(";
 
+//fetching time zone
 export const fetchTimeZones = timeZones => {
     return {
         type: actionTypes.FETCH_TIME_ZONES,
@@ -59,14 +61,18 @@ export const registerOnDatabase = userData => {
     };
 };
 
+// logout
 export const logout = () => {
     localStorage.removeItem("idToken");
     localStorage.removeItem("localId");
     localStorage.removeItem("expiresIn");
+    localStorage.removeItem("username");
+    localStorage.removeItem("localZone");
     return {
         type: actionTypes.LOGOUT
     };
 };
+//logout
 
 export const checkAuthTime = time => {
     return dispatch => {
@@ -112,6 +118,17 @@ export const signUpUser = data => {
     };
 };
 
+export const reSignIn = () => {
+    return {
+        type: actionTypes.RE_SIGN_IN,
+        username: localStorage.getItem("username"),
+        idToken: localStorage.getItem("idToken"),
+        localZone: localStorage.getItem("localZone"),
+        localId: localStorage.getItem("localId"),
+        firebaseId: localStorage.getItem("firebaseId")
+    };
+};
+
 export const checkAuthState = () => {
     return dispatch => {
         const idToken = localStorage.getItem("idToken");
@@ -120,23 +137,15 @@ export const checkAuthState = () => {
         } else {
             const expiresIn = new Date(localStorage.getItem("expiresIn"));
             if (new Date() < expiresIn) {
-                console.log("reached here");
                 dispatch(
                     checkAuthTime(
-                        (expiresIn.getTime() - new Date().getTime()) / 1000
+                        Math.floor(
+                            (expiresIn.getTime() - new Date().getTime()) / 1000
+                        )
                     )
                 );
-                dispatch(
-                    signUpSucceed({
-                        userId: localStorage.getItem("localId"),
-                        idToken: localStorage.getItem("idToken"),
-                        expiresIn: localStorage.getItem("expiresIn"),
-                        username: localStorage.getItem("username"),
-                        localZone: localStorage.getItem("localZone")
-                    })
-                );
+                dispatch(reSignIn());
             } else {
-                console.log("reached here");
                 dispatch(logout());
             }
         }
@@ -151,27 +160,59 @@ export const singInStart = () => {
 };
 
 export const signInSucceed = userData => {
+    localStorage.setItem("localId", userData.localId);
+    localStorage.setItem("idToken", userData.idToken);
+    if (userData.expiresIn) {
+        localStorage.setItem(
+            "expiresIn",
+            new Date(new Date().getTime() + userData.expiresIn * 1000)
+        );
+    }
+
+    localStorage.setItem("username", userData.username);
+    localStorage.setItem("localZone", userData.localZone);
+    localStorage.setItem("firebaseId", userData.firebaseId);
+
     return {
         type: actionTypes.SIGN_IN_SUCCEED,
         idToken: userData.idToken,
-        userId: userData.localId,
-        expiresIn: userData.expiresIn
+        localId: userData.localId,
+        localZone: userData.localZone,
+        username: userData.username,
+        firebaseId: userData.firebaseId
     };
 };
 
-export const fetchUserData = userId => {
+export const signInFailed = () => {
+    return {
+        type: ""
+    };
+};
+
+export const fetchUserData = userData => {
     return dispatch => {
         axios
             .get("https://activity-checker.firebaseio.com/users.json")
             .then(res => {
                 console.log(res.data);
                 let user = null;
+                let firebaseId = null;
                 for (let key in res.data) {
-                    if (res.data[key].userId === userId) {
+                    if (res.data[key].userId === userData.localId) {
                         user = res.data[key];
+                        firebaseId = key;
                     }
                 }
-                console.log(user);
+                dispatch(
+                    signInSucceed({
+                        idToken: userData.idToken,
+                        localId: userData.localId,
+                        expiresIn: userData.expiresIn,
+                        username: user.username,
+                        localZone: user.localZone,
+                        firebaseId: firebaseId
+                    })
+                );
             });
     };
 };
@@ -189,14 +230,8 @@ export const signIn = signInData => {
             )
             .then(res => {
                 console.log(res);
-                dispatch(
-                    signInSucceed({
-                        idToken: res.data.idToken,
-                        localId: res.data.localId,
-                        expiresIn: res.data.expiresIn
-                    })
-                );
-                dispatch(fetchUserData(res.data.localId));
+
+                dispatch(fetchUserData(res.data));
             });
     };
 };

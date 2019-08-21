@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import classes from "./Auth.module.css";
 import * as actions from "../../store/actions/index";
 import Aux from "../../hoc/Auxilliary/Auxilliary";
+import checkValidity from "../../utils/checkValidity";
 import Spinner from "../../Components/UI/Spinner/Spinner";
 
 class Auth extends Component {
@@ -42,8 +43,8 @@ class Auth extends Component {
                 }
             },
             localTime: {
-                touched: false,
-                valid: false,
+                touched: true,
+                valid: true,
                 htmlFor: "local-time",
                 value: "Asia/Tehran",
                 validation: {},
@@ -204,7 +205,6 @@ class Auth extends Component {
 
     inputChangeHandler = (e, formElement) => {
         const value = e.target.value;
-        console.log(value);
         const form = {
             ...this.state.form,
             [formElement]: {
@@ -213,11 +213,11 @@ class Auth extends Component {
                 value: value
             }
         };
-        form[formElement].valid = this.checkValidty(
+        form[formElement].valid = checkValidity(
             value,
-            this.state.form[formElement].validation
+            this.state.form[formElement].validation,
+            this.state.form.password
         );
-        console.log(form[formElement].valid);
 
         let formIsValid = true;
         for (let key in form) {
@@ -225,42 +225,6 @@ class Auth extends Component {
         }
 
         this.setState({ formIsValid: formIsValid, form: form });
-    };
-
-    checkValidty = (value, validation) => {
-        let isValid = true;
-
-        if (validation.isUserName) {
-            const userReg = /^[a-z0-9_\s]{5,20}$/gi;
-            const startReg = /^\s|\s$/;
-            const result = userReg.test(value) && !startReg.test(value);
-            isValid = isValid && result;
-        }
-
-        if (validation.isEmail) {
-            const emailReg = /^\w+@[a-zA-Z]+\.[a-z]{2,5}$/;
-            const result = emailReg.test(value);
-            isValid = isValid && result;
-        }
-
-        if (validation.isPass) {
-            const passReg = /[\w]{8,}/;
-            const hasNumReg = /[0-9]+/;
-            const hasCapital = /[A-Z]+/;
-            const result =
-                passReg.test(value) &&
-                hasNumReg.test(value) &&
-                hasCapital.test(value);
-            isValid = isValid && result;
-        }
-
-        if (validation.isSame) {
-            isValid =
-                isValid &&
-                this.state.form.password.valid &&
-                this.state.form.password.value === value;
-        }
-        return isValid;
     };
 
     submitHandler = e => {

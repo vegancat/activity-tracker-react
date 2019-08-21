@@ -1,4 +1,4 @@
-export { convertToColor } from "./chains";
+export { convertToColor, addChain } from "./chains";
 
 export {} from "./dates";
 
