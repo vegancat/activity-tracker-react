@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 import classes from "./SignIn.module.css";
 import Aux from "../../../hoc/Auxilliary/Auxilliary";
+import Spinner from "../../../Components/UI/Spinner/Spinner";
 import * as actions from "../../../store/actions/index";
 
 class SignIn extends Component {
@@ -36,6 +37,14 @@ class SignIn extends Component {
     };
 
     render() {
+        let button = <button className={classes.Button}>Sign In</button>;
+        if (this.props.showSpinner) {
+            button = (
+                <div className={classes.Spinner}>
+                    <Spinner />
+                </div>
+            );
+        }
         return (
             <div className={classes.Container}>
                 <form
@@ -49,6 +58,7 @@ class SignIn extends Component {
                                     htmlFor={
                                         this.state.form[formElement].htmFor
                                     }
+                                    className={classes.Label}
                                 >
                                     {formElement}
                                 </label>
@@ -64,7 +74,7 @@ class SignIn extends Component {
                             </Aux>
                         );
                     })}
-                    <button>Sign In</button>
+                    {button}
                 </form>
             </div>
         );
@@ -96,6 +106,12 @@ class SignIn extends Component {
     };
 }
 
+const mapStateToProps = state => {
+    return {
+        showSpinner: state.auth.showSpinner
+    };
+};
+
 const mapDispatchToProps = dispatch => {
     return {
         submitFormHandler: signInData => dispatch(actions.signIn(signInData))
@@ -103,6 +119,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
 )(SignIn);

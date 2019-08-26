@@ -8,6 +8,7 @@ import Layout from "./hoc/Layout/Layout";
 import Auth from "./Containers/Auth/Auth";
 import UserArea from "./Components/UserArea/UserArea";
 import Home from "./Components/Home/Home";
+import Logout from "./Components/Logout/Logout";
 
 class App extends Component {
     componentDidMount() {
@@ -26,6 +27,7 @@ class App extends Component {
             routes = (
                 <Switch>
                     <Route path="/user" exact component={UserArea} />
+                    <Route path="/logout" component={Logout} />
                     <Redirect to="/user" />
                 </Switch>
             );

@@ -6,6 +6,7 @@ import * as actions from "../../store/actions/index";
 import Aux from "../../hoc/Auxilliary/Auxilliary";
 import checkValidity from "../../utils/checkValidity";
 import Spinner from "../../Components/UI/Spinner/Spinner";
+import { callExpression } from "@babel/types";
 
 class Auth extends Component {
     state = {
@@ -96,6 +97,22 @@ class Auth extends Component {
     }
 
     render() {
+        let signUpButton = (
+            <button
+                className={classes.SignUp}
+                disabled={!this.state.formIsValid}
+            >
+                Sign Up
+            </button>
+        );
+        if (this.props.showSpinner) {
+            signUpButton = (
+                <div className={classes.SpinnerForButton}>
+                    <Spinner />
+                </div>
+            );
+        }
+
         const formElementsArray = Object.keys(this.state.form);
         let form = (
             <div className={classes.Spinner}>
@@ -105,11 +122,14 @@ class Auth extends Component {
         if (this.props.timeZones !== null) {
             const localTimeSelect = (
                 <Aux key="localtimelabel">
-                    <label htmlFor="local-time">Local Time-Zone</label>
+                    <label htmlFor="local-time" className={classes.Label}>
+                        Local Time-Zone
+                    </label>
                     <select
                         {...this.state.form.localTime.elementConfig}
                         value={this.state.form.localTime.value}
                         onChange={e => this.inputChangeHandler(e, "localTime")}
+                        className={classes.Select}
                     >
                         {this.props.timeZones.map(timeZone => {
                             return (
@@ -146,6 +166,7 @@ class Auth extends Component {
                                                 this.state.form[formElement]
                                                     .htmlFor
                                             }
+                                            className={classes.Label}
                                         >
                                             {formElement}
                                         </label>
@@ -170,12 +191,7 @@ class Auth extends Component {
                                 return localTimeSelect;
                             }
                         })}
-                        <button
-                            className={classes.SignUp}
-                            disabled={!this.state.formIsValid}
-                        >
-                            Sign Up
-                        </button>
+                        {signUpButton}
                         <div className={classes.Description}>
                             <p>
                                 1-Your (user)name should be{" "}
@@ -241,7 +257,8 @@ class Auth extends Component {
 const mapStateToProps = state => {
     return {
         localTime: state.auth.localTime,
-        timeZones: state.auth.timeZones
+        timeZones: state.auth.timeZones,
+        showSpinner: state.auth.showSpinner
     };
 };
 

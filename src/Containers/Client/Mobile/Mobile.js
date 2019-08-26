@@ -1,17 +1,19 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import classes from "./Mobile.module.css";
 import * as actions from "../../../store/actions/index";
-import Dates from "../../Dates/Dates";
-import Modal from "../../../Components/UI/Modal/Modal";
-import BackDrop from "../../../Components/UI/BackDrop/BackDrop";
 import checkValidity from "../../../utils/checkValidity";
+import Dates from "../../../Components/Dates/Dates";
+import ChainLink from "../../../Components/Chain/ChainLink/ChainLink";
+import SelectedChain from "./SelectedChain/SelectedChain";
+import Title from "../../../Components/Chain/Title/Title";
+import AddChainForm from "../../../Components/AddChainForm/AddChainForm";
+import Spinner from "../../../Components/UI/Spinner/Spinner";
+import chainCartoon from "../../../assets/images/chain/link.svg";
 
 class Mobile extends Component {
     state = {
-        showForm: false,
-        chainSelected: false,
         addChainForm: {
             chainName: {
                 value: "",
@@ -34,99 +36,149 @@ class Mobile extends Component {
             "rgba(193,168,3,0.8)",
             "rgba(200,13,70,0.8)"
         ],
-        activeColor: "rgba(6,136,204,0.8)"
+        activeColor: "rgba(6,136,204,0.8)",
+        selectedChain: null
     };
 
     render() {
-        let form = null;
-        if (this.state.showForm) {
-            form = (
-                <Fragment>
-                    <BackDrop show={this.state.showForm} />
-                    <Modal show={this.state.showForm}>
-                        <form
-                            className={classes.AddChainForm}
-                            onSubmit={this.submitAddChainFormHandler}
-                        >
-                            <input
-                                className={classes.ChainName}
-                                {...this.state.addChainForm.chainName
-                                    .elementConfig}
-                                value={this.state.addChainForm.chainName.value}
-                                onChange={this.chainNameChangeHandler}
-                            />
-                            <div
-                                style={{
-                                    textAlign: "center",
-                                    marginTop: "2rem",
-                                    fontFamily: '"Open Sans", sans-serif',
-                                    fontSize: "1.4rem"
-                                }}
-                            >
-                                Color :
-                            </div>
-                            <div className={classes.ChainColors}>
-                                {this.state.chainColors.map(color => {
-                                    let colorClasses = [classes.ChainColor];
-                                    if (color === this.state.activeColor) {
-                                        colorClasses.push(classes.ActiveColor);
-                                    }
-                                    return (
-                                        <div
-                                            onClick={() =>
-                                                this.formColorChangeHandler(
-                                                    color
-                                                )
-                                            }
-                                            style={{ backgroundColor: color }}
-                                            className={colorClasses.join(" ")}
-                                            key={color}
-                                        />
-                                    );
-                                })}
-                            </div>
-                            <button
-                                className={classes.AddChainSubmitButton}
-                                style={{
-                                    border: `2px solid ${
-                                        this.state.activeColor
-                                    }`,
-                                    backgroundColor: this.state.activeColor
-                                }}
-                                disabled={
-                                    !this.state.addChainForm.chainName.valid
-                                }
-                            >
-                                Add
-                            </button>
-                        </form>
-                    </Modal>
-                </Fragment>
+        console.log(this.props.showSignInForm);
+        let selectedChain = null;
+        if (this.state.selectedChain) {
+            selectedChain = (
+                <>
+                    <div className={classes.Title}>
+                        <Title
+                            title={
+                                this.props.chains[this.state.selectedChain].name
+                            }
+                            color={
+                                this.props.chains[this.state.selectedChain]
+                                    .color
+                            }
+                        />
+                    </div>
+                    <div className={classes.SelectedChain}>
+                        <SelectedChain
+                            ings={
+                                this.props.chains[this.state.selectedChain].ings
+                            }
+                            chainKey={this.state.selectedChain}
+                        />
+                    </div>
+                </>
             );
         }
-        return (
+
+        let chains = this.props.chains;
+        let chainLinks = <div>No chains added yet!</div>;
+        if (chains) {
+            chainLinks = Object.keys(chains).map(chainKey => {
+                return (
+                    <ChainLink
+                        name={chains[chainKey].name}
+                        color={chains[chainKey].color}
+                        key={chainKey}
+                        chainKey={chainKey}
+                        onLinkClick={this.chainLinkClickHandler}
+                    />
+                );
+            });
+        }
+
+        let container = (
             <div className={classes.Container}>
-                {form}
-                <div className={classes.DatesChainsContainer}>
-                    <Dates />
-                </div>
-                <div className={classes.SelectChain}>
-                    <div className={classes.Chains}>chains</div>
-                    <div
-                        className={classes.SelectButtonContainer}
-                        onClick={this.addChainHandler}
-                    >
-                        <div className={classes.SelectButton}>
-                            <div className={classes.PlusSign}>+</div>
+                <Spinner />
+            </div>
+        );
+
+        if (this.props.dates) {
+            container = (
+                <div className={classes.Container}>
+                    <div className={classes.Description}>
+                        Please select a chain or create a new one !
+                        <div className={classes.ChainCartoonContainer}>
+                            <img
+                                className={classes.ChainCartoon}
+                                src={chainCartoon}
+                                alt="chain image"
+                            />
+                        </div>
+                    </div>
+                    <AddChainForm
+                        showForm={this.props.showSignInForm}
+                        addChainForm={this.state.addChainForm}
+                        activeColor={this.state.activeColor}
+                        chainColors={this.state.chainColors}
+                        onSubmitAddChainForm={this.submitAddChainFormHandler}
+                        onFormColorChange={this.formColorChangeHandler}
+                        onChainNameChange={this.chainNameChangeHandler}
+                        onBackDrop={this.backDropHandler}
+                    />
+                    <div className={classes.SelectChain}>
+                        <div className={classes.Chains}>{chainLinks}</div>
+                        <div
+                            className={classes.SelectButtonContainer}
+                            onClick={this.addChainHandler}
+                        >
+                            <div className={classes.SelectButton}>
+                                <div className={classes.PlusSign}>+</div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        );
+            );
+
+            let selectChainClasses = [classes.SelectChain];
+            if (this.state.selectedChain) {
+                selectChainClasses.push(classes.IsSelectedSelectChain);
+                container = (
+                    <div className={classes.Container}>
+                        <AddChainForm
+                            showForm={this.props.showSignInForm}
+                            addChainForm={this.state.addChainForm}
+                            activeColor={this.state.activeColor}
+                            chainColors={this.state.chainColors}
+                            onSubmitAddChainForm={
+                                this.submitAddChainFormHandler
+                            }
+                            onFormColorChange={this.formColorChangeHandler}
+                            onChainNameChange={this.chainNameChangeHandler}
+                            onBackDrop={this.backDropHandler}
+                        />
+                        <div className={classes.DatesChainsContainer}>
+                            <div className={classes.LogoContainer}>
+                                <img
+                                    className={classes.Logo}
+                                    src={chainCartoon}
+                                    alt="logo"
+                                />
+                            </div>
+                            <div className={classes.Dates}>
+                                <Dates />
+                            </div>
+                            {selectedChain}
+                        </div>
+                        <div className={selectChainClasses.join(" ")}>
+                            <div className={classes.Chains}>{chainLinks}</div>
+                            <div
+                                className={classes.SelectButtonContainer}
+                                onClick={this.addChainHandler}
+                            >
+                                <div className={classes.SelectButton}>
+                                    <div className={classes.PlusSign}>+</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+        }
+
+        return container;
     }
 
     addChainHandler = () => {
-        this.setState({ showForm: true });
+        this.props.showForm();
     };
 
     chainNameChangeHandler = e => {
@@ -152,25 +204,44 @@ class Mobile extends Component {
 
     submitAddChainFormHandler = e => {
         e.preventDefault();
-        console.log(this.props.firebaseId);
         this.props.addChainFormHandler({
             name: this.state.addChainForm.chainName.value,
             color: this.state.activeColor,
             firebaseId: this.props.firebaseId
         });
+
+        // this.setState({ showForm: false });
+    };
+
+    chainLinkClickHandler = chainKey => {
+        this.setState({
+            selectedChain: chainKey
+        });
+
+        this.props.initSelectedChainStart();
+    };
+
+    backDropHandler = () => {
+        this.props.hideForm();
     };
 }
+const mapStateToProps = state => {
+    return {
+        firebaseId: state.auth.firebaseId,
+        chains: state.chains.chains,
+        dates: state.dates.dates,
+        showSignInForm: state.chains.showSignInForm
+    };
+};
 
 const mapDispatchToProps = dispatch => {
     return {
         addChainFormHandler: chainConfig =>
-            dispatch(actions.addChain(chainConfig))
-    };
-};
-
-const mapStateToProps = state => {
-    return {
-        firebaseId: state.auth.firebaseId
+            dispatch(actions.addChain(chainConfig)),
+        initSelectedChainStart: () =>
+            dispatch(actions.initSelectedChainStart()),
+        showForm: () => dispatch(actions.showForm()),
+        hideForm: () => dispatch(actions.hideForm())
     };
 };
 

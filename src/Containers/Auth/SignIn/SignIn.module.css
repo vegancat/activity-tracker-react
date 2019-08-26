@@ -21,14 +21,9 @@
     border-radius: 5px;
 }
 
-.Form input,
-.Form label,
-.Form button {
-    font-family: "open sans", sans-serif;
-}
-
-.Form label {
+.Label {
     font-weight: bold;
+    font-family: "open sans", sans-serif;
 }
 
 .Input {
@@ -39,9 +34,10 @@
     outline: none;
     border-radius: 5px;
     border: 1px solid black;
+    font-family: "open sans", sans-serif;
 }
 
-.Form button {
+.Button {
     align-self: center;
     padding: 0.2rem;
     font-weight: bold;
@@ -51,6 +47,11 @@
     border-radius: 5px;
     outline: none;
     cursor: pointer;
+    font-family: "open sans", sans-serif;
+}
+
+.Spinner {
+    align-self: center;
 }
 
 @media (min-width: 26rem) {
@@ -61,7 +62,7 @@
         width: 35rem;
     }
 
-    .Form label {
+    .Label {
         font-size: 1.2rem;
     }
 }

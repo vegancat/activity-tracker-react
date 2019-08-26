@@ -1,26 +1,68 @@
 import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
-    chains: {
-        chain1: {
-            colors: ["blue", "black", "red", "black", "green"],
-            lengths: [2, 0, 3, 0, 5]
-        }
-    }
+    chains: null,
+    showSpinner: false,
+    shouldInitSelectedChain: true,
+    showSignInForm: false
 };
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.CONVERT_TO_COLOR:
+        case actionTypes.INIT_CHAINS:
             return {
                 ...state,
-                chains: {
-                    ...state.chains,
-                    [action.chainId]: {
-                        ...state.chains[action.chainId],
-                        lengths: action.lengths
-                    }
-                }
+                chains: action.chains
+            };
+
+        case actionTypes.SHOW_FORM:
+            return {
+                ...state,
+                showSignInForm: true
+            };
+
+        case actionTypes.HIDE_FORM:
+            return {
+                ...state,
+                showSignInForm: false
+            };
+
+        case actionTypes.ADD_CHAIN_START:
+            return {
+                ...state,
+                showSpinner: true
+            };
+
+        case actionTypes.ADD_CHAIN_SUCCEED:
+            return {
+                ...state,
+                showSpinner: false
+            };
+        case actionTypes.ADD_CHAIN_FAILED:
+            return {
+                ...state,
+                showSpinner: false
+            };
+        case actionTypes.INIT_SELECTED_CHAIN_START:
+            return {
+                ...state,
+                shouldInitSelectedChain: true
+            };
+        case actionTypes.INIT_SELECTED_CHAIN_SUCCEED:
+            return {
+                ...state,
+                shouldInitSelectedChain: false
+            };
+        case actionTypes.STORE_NEW_CHAIN:
+            return {
+                ...state,
+                chains: action.chains
+            };
+
+        case actionTypes.UPDATE_SELECTED_CHAIN:
+            return {
+                ...state,
+                chains: action.updatedChains
             };
         default:
             return state;

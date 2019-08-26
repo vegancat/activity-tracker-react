@@ -1,0 +1,24 @@
+.Container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    margin: 0.2rem 1rem;
+}
+
+.Link {
+    border-radius: 50%;
+    width: 4rem;
+    height: 4rem;
+    border: 1px solid transparent;
+    margin-bottom: 0.3rem;
+}
+
+.Name {
+    text-align: center;
+    font-family: "Open Sans", sans-serif;
+    font-size: 1.2rem;
+    width: 4rem;
+    height: auto;
+}

@@ -1,7 +1,7 @@
 .Layout {
     display: grid;
     grid-template-rows:
-        [row-1-start] 3rem [row-1-end row-2-start] auto [row-2-end row-3-start] fit-content(
+        [row-1-start] 3rem [row-1-end row-2-start] 1fr [row-2-end row-3-start] fit-content(
             3.3rem
         )
         [row-3-end];
@@ -10,4 +10,5 @@
         "header"
         "main"
         "footer";
+    height: 100%;
 }

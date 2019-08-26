@@ -7,8 +7,14 @@
 }
 
 .Spinner {
+    grid-area: main;
     width: 100%;
-    margin: 10rem auto 12rem auto;
+    margin: 12rem auto 22rem auto;
+}
+
+.SpinnerForButton {
+    margin-top: 1rem;
+    align-self: center;
 }
 
 .Form {
@@ -19,21 +25,21 @@
     align-items: flex-start;
 }
 
-.Form label {
+.Label {
     font-weight: bold;
     font-size: 1rem;
 }
 
-.Form input,
-.Form label,
-.Form select {
+.Input,
+.Label,
+.Select {
     display: block;
     margin-bottom: 0.4rem;
     width: 100%;
 }
 
-.Form input,
-.Form select {
+.Input,
+.Select {
     padding: 0.3rem;
     border-radius: 5px;
     font-family: "open sans", sans-serif;
@@ -53,8 +59,8 @@
     background: #fda9a9;
 }
 
-.Form input:focus,
-.Form select:focus {
+.Input:focus,
+.Select:focus {
     outline: none;
 }
 
@@ -84,11 +90,6 @@
     background: plum;
 }
 
-/* @media (min-width: 25rem) {
-    .Container {
-        width: 50%;
-    }
-} */
 @media (min-width: 26rem) {
     .Form {
         padding: 2rem;

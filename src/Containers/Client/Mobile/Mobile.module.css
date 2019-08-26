@@ -1,76 +1,109 @@
 .Container {
     position: relative;
+    height: 100%;
 }
 
-.ChainName {
+.DatesChainsContainer {
+    display: grid;
+    grid-template-rows: [row-1-start] 10rem [row-1-end row-2-start] auto [row-2-end];
+    grid-template-columns: [column-1-start] 7rem [column-1-end column-2-start] auto [column-2-end];
+    grid-template-areas:
+        "logo title"
+        "dates chain";
+}
+
+.LogoContainer {
+    grid-area: logo;
     width: 100%;
-    padding: 1rem;
-    text-align: center;
-    font-size: 1.4rem;
-    font-family: "Open Sans", sans-serif;
-    border-radius: 5px;
-    border: 1px solid black;
-    outline: none;
+    height: 100%;
+    padding-left: 1rem;
 }
 
-.ChainColors {
+.Logo {
+    width: 80%;
+    height: 100%;
+}
+
+.Dates {
+    grid-area: dates;
+}
+
+.Title {
+    grid-area: title;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 1rem auto;
 }
 
-.ChainColor {
-    width: 2rem;
-    height: 2rem;
-    border: 2px solid transparent;
-    margin: 0 0.3rem;
+.SelectedChain {
+    grid-area: chain;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 
-.ActiveColor {
-    border: 2px solid black;
-    border-radius: 5px;
-}
-
-.AddChainSubmitButton {
-    outline: none;
-    width: 6rem;
-    font-family: "Open Sans", sans-serif;
-    font-size: 1.6rem;
-    font-weight: bold;
-    border-radius: 6px;
+.Description {
+    width: 80%;
+    height: 23rem;
+    border: 3px solid black;
+    border-radius: 7px;
+    margin: 2rem auto 5rem;
+    padding: 1rem;
     text-align: center;
+    font-family: "Open Sans", sans-serif;
+    font-size: 1.5rem;
+}
+
+.ChainCartoonContainer {
+    margin: 4rem auto;
+    width: 60%;
+    height: 8rem;
+}
+
+.ChainCartoon {
+    width: 100%;
+    height: 100%;
+    display: block;
 }
 
 .SelectChain {
-    position: sticky;
-    display: flex;
+    position: relative;
     bottom: 2rem;
-    margin: 2rem auto 2rem auto;
+    display: flex;
+    margin: 2rem auto;
     border-radius: 40px 0 0 40px;
     width: 95%;
-    height: 4rem;
+    height: 7rem;
     background: white;
     box-shadow: 3px 6px 4px #ccc;
 }
 
+.IsSelectedSelectChain {
+    position: sticky;
+}
+
 .Chains {
-    width: 87%;
+    width: 85%;
     height: 100%;
     border-radius: 40px 0 0 40px;
     border: 1px solid black;
     border-right: 1px dashed black;
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    overflow-x: auto;
 }
 
 .SelectButtonContainer {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 13%;
+    width: 15%;
     height: 100%;
     border: 1px solid black;
     border-left: none;
+    background-color: white;
 }
 
 .SelectButton {
@@ -87,5 +120,5 @@
     display: block;
     font-size: 3rem;
     text-align: center;
-    line-height: 95%;
+    line-height: 7rem;
 }

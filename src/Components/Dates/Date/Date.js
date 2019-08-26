@@ -6,7 +6,7 @@ const date = props => {
     return (
         <div className={classes.Date}>
             <div className={classes.Date__MonthDay}>
-                {props.date.month} {props.date.dayOfMonth}
+                {props.date.month[1]} {props.date.dayOfMonth}
             </div>
             <div className={classes.Date__DayOfWeek}>
                 {props.date.dayOfWeek[1]}

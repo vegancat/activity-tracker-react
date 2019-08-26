@@ -1,8 +1,9 @@
 import * as actionTypes from "./actionTypes";
 import axios from "axios";
-import { logicalExpression } from "@babel/types";
+import { initChains } from "./index";
+import { initDates, initDatesSucceed } from "./dates";
 
-let API_KEY = "for security i'm not gonna release it :(";
+let API_KEY = "Ops i'm not gonna share this :(";
 
 //fetching time zone
 export const fetchTimeZones = timeZones => {
@@ -84,6 +85,7 @@ export const checkAuthTime = time => {
 
 export const signUpUser = data => {
     return dispatch => {
+        dispatch(signUpStart());
         axios
             .post(
                 `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`,
@@ -114,7 +116,7 @@ export const signUpUser = data => {
                 dispatch(checkAuthTime(res.data.expiresIn));
             })
 
-            .catch(error => console.log(error));
+            .catch(error => dispatch(signUpFailed()));
     };
 };
 
@@ -145,6 +147,12 @@ export const checkAuthState = () => {
                     )
                 );
                 dispatch(reSignIn());
+                dispatch(
+                    initChains(JSON.parse(localStorage.getItem("chains")))
+                );
+                dispatch(
+                    initDatesSucceed(JSON.parse(localStorage.getItem("dates")))
+                );
             } else {
                 dispatch(logout());
             }
@@ -179,13 +187,14 @@ export const signInSucceed = userData => {
         localId: userData.localId,
         localZone: userData.localZone,
         username: userData.username,
-        firebaseId: userData.firebaseId
+        firebaseId: userData.firebaseId,
+        chains: userData.chains
     };
 };
 
 export const signInFailed = () => {
     return {
-        type: ""
+        type: actionTypes.SIGN_IN_FAILED
     };
 };
 
@@ -194,7 +203,6 @@ export const fetchUserData = userData => {
         axios
             .get("https://activity-checker.firebaseio.com/users.json")
             .then(res => {
-                console.log(res.data);
                 let user = null;
                 let firebaseId = null;
                 for (let key in res.data) {
@@ -203,6 +211,7 @@ export const fetchUserData = userData => {
                         firebaseId = key;
                     }
                 }
+
                 dispatch(
                     signInSucceed({
                         idToken: userData.idToken,
@@ -213,12 +222,16 @@ export const fetchUserData = userData => {
                         firebaseId: firebaseId
                     })
                 );
+                console.log(user.chains);
+                dispatch(initChains(user.chains));
+                dispatch(initDates(user.localZone));
             });
     };
 };
 
 export const signIn = signInData => {
     return dispatch => {
+        dispatch(singInStart());
         axios
             .post(
                 `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`,
@@ -229,9 +242,10 @@ export const signIn = signInData => {
                 }
             )
             .then(res => {
-                console.log(res);
-
                 dispatch(fetchUserData(res.data));
+            })
+            .catch(err => {
+                dispatch(signInFailed());
             });
     };
 };

@@ -1,3 +1,7 @@
 .Container {
     grid-area: main;
 }
+
+.MobileView {
+    height: 100%;
+}
