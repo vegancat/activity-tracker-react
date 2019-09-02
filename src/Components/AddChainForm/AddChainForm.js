@@ -9,6 +9,19 @@ import Spinner from "../UI/Spinner/Spinner";
 const addChainForm = props => {
     let form = null;
     if (props.showForm) {
+        let button = props.type === "add" ? "add" : "edit";
+        let deleteButton =
+            props.type === "add" ? null : (
+                <button
+                    className={classes.DeleteButton}
+                    onClick={() => {
+                        props.onDeleteChain();
+                        props.onBackDrop();
+                    }}
+                >
+                    Delete
+                </button>
+            );
         form = (
             <Fragment>
                 <BackDrop
@@ -23,6 +36,11 @@ const addChainForm = props => {
                         <input
                             className={classes.ChainName}
                             {...props.addChainForm.chainName.elementConfig}
+                            placeholder={
+                                props.type === "edit"
+                                    ? "New Name"
+                                    : "Chain Name"
+                            }
                             value={props.addChainForm.chainName.value}
                             onChange={props.onChainNameChange}
                         />
@@ -62,9 +80,10 @@ const addChainForm = props => {
                             }}
                             disabled={!props.addChainForm.chainName.valid}
                         >
-                            Add
+                            {button}
                         </button>
                     </form>
+                    {deleteButton}
                 </Modal>
             </Fragment>
         );

@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 import classes from "./Auth.module.css";
 import * as actions from "../../store/actions/index";
 import Aux from "../../hoc/Auxilliary/Auxilliary";
 import checkValidity from "../../utils/checkValidity";
 import Spinner from "../../Components/UI/Spinner/Spinner";
-import { callExpression } from "@babel/types";
+import BackDrop from "../../Components/UI/BackDrop/BackDrop";
+import Modal from "../../Components/UI/Modal/Modal";
 
 class Auth extends Component {
     state = {
@@ -216,7 +218,21 @@ class Auth extends Component {
             );
         }
 
-        return <Aux>{form}</Aux>;
+        return this.props.redirect ? (
+            <Redirect to="/" />
+        ) : (
+            <Aux>
+                <Modal show={this.props.err !== null}>
+                    this Email Exists or error is related to your Internet
+                    connection
+                </Modal>
+                <BackDrop
+                    show={this.props.err !== null}
+                    onBackDropHandler={this.props.clearError}
+                />
+                {form}
+            </Aux>
+        );
     }
 
     inputChangeHandler = (e, formElement) => {
@@ -258,7 +274,9 @@ const mapStateToProps = state => {
     return {
         localTime: state.auth.localTime,
         timeZones: state.auth.timeZones,
-        showSpinner: state.auth.showSpinner
+        showSpinner: state.auth.showSpinner,
+        redirect: state.auth.redirect,
+        err: state.auth.error
     };
 };
 
@@ -273,7 +291,8 @@ const mapDispatchToProps = dispatch => {
                     username: username,
                     localZone: localZone
                 })
-            )
+            ),
+        clearError: () => dispatch(actions.clearError())
     };
 };
 

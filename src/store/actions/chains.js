@@ -115,7 +115,6 @@ export const initSelectedChainSucceed = () => {
 
 // store chain
 export const storeChain = (firebaseId, chainKey, ings) => {
-    console.log(firebaseId, chainKey, ings);
     return dispatch => {
         axios
             .put(
@@ -173,5 +172,108 @@ export const updateSelectedChain = (updatedChain, fetchedChains, chainKey) => {
     return {
         type: actionTypes.UPDATE_SELECTED_CHAIN,
         updatedChains: updatedChains
+    };
+};
+
+//edit chain
+export const editChainStart = () => {
+    return {
+        type: actionTypes.EDIT_CHAIN_START
+    };
+};
+
+export const editChainSucceed = updatedChains => {
+    localStorage.setItem("chains", JSON.stringify(updatedChains));
+    return {
+        type: actionTypes.EDIT_CHAIN_SUCCEED,
+        updatedChains: updatedChains
+    };
+};
+
+export const editChainFailed = () => {
+    return {
+        type: actionTypes.EDIT_CHAIN_FAILED
+    };
+};
+
+export const showEditForm = () => {
+    return {
+        type: actionTypes.SHOW_EDIT_FORM
+    };
+};
+
+export const hideEditForm = () => {
+    return {
+        type: actionTypes.HIDE_EDIT_FORM
+    };
+};
+
+export const editChain = (updatedChain, chains, firebaseId) => {
+    return dispatch => {
+        const updatedChains = {
+            ...chains,
+            [updatedChain.chainKey]: { ...chains[updatedChain.chainKey] }
+        };
+        updatedChains[updatedChain.chainKey].name = updatedChain.name;
+        updatedChains[updatedChain.chainKey].color = updatedChain.color;
+
+        dispatch(editChainStart());
+        axios
+            .put(
+                `https://activity-checker.firebaseio.com/users/${firebaseId}/chains.json`,
+                updatedChains
+            )
+            .then(res => {
+                dispatch(hideEditForm());
+                dispatch(editChainSucceed(updatedChains));
+            })
+            .catch(err => {
+                dispatch(hideEditForm());
+                dispatch(editChainFailed());
+            });
+    };
+};
+
+export const deleteChainStart = () => {
+    return {
+        type: actionTypes.DELETE_CHAIN_START
+    };
+};
+
+export const deleteChainSucceed = updatedChains => {
+    localStorage.setItem("chains", JSON.stringify(updatedChains));
+    return {
+        type: actionTypes.DELETE_CHAIN_SUCCEED,
+        updatedChains: updatedChains
+    };
+};
+
+export const deleteChainFailed = () => {
+    return {
+        type: actionTypes.DELETE_CHAIN_FAILED
+    };
+};
+
+export const deleteChain = (selectedChain, chains, firebaseId) => {
+    return dispatch => {
+        const updatedKeys = Object.keys(chains).filter(
+            key => key !== selectedChain
+        );
+        const updatedChains = {};
+        for (let key of updatedKeys) {
+            updatedChains[key] = chains[key];
+        }
+        dispatch(deleteChainStart());
+        axios
+            .put(
+                `https://activity-checker.firebaseio.com/users/${firebaseId}/chains.json`,
+                updatedChains
+            )
+            .then(res => {
+                dispatch(deleteChainSucceed(updatedChains));
+            })
+            .catch(err => {
+                dispatch(deleteChainFailed());
+            });
     };
 };

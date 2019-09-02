@@ -1,6 +1,7 @@
 import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
+    error: null,
     localZone: null,
     timeZones: null,
     idToken: null,
@@ -8,43 +9,54 @@ const initialState = {
     username: null,
     firebaseId: null,
     chains: null,
-    showSpinner: false
+    showSpinner: false,
+    redirect: false
 };
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
+        case actionTypes.CLEAR_ERROR:
+            return {
+                ...state,
+                error: null
+            };
+
         case actionTypes.FETCH_TIME_ZONES:
             return {
                 ...state,
                 timeZones: action.timeZones
             };
 
+        case actionTypes.REDIRECT:
+            return {
+                ...state,
+                redirect: !state.redirect
+            };
         case actionTypes.SIGN_UP_START:
             return {
                 ...state,
-                showSpinner: true
+                showSpinner: true,
+                error: null
             };
 
         case actionTypes.SIGN_UP_SUCCEED:
             return {
                 ...state,
-                localZone: action.userData.localZone,
-                idToken: action.userData.idToken,
-                localId: action.userData.userId,
-                username: action.userData.username,
                 showSpinner: false
             };
 
         case actionTypes.SIGN_UP_FAILED:
             return {
                 ...state,
-                showSpinner: false
+                showSpinner: false,
+                error: action.error
             };
 
         case actionTypes.SIGN_IN_START:
             return {
                 ...state,
-                showSpinner: true
+                showSpinner: true,
+                error: null
             };
         case actionTypes.SIGN_IN_SUCCEED:
             return {
@@ -61,7 +73,8 @@ const reducer = (state = initialState, action) => {
         case actionTypes.SIGN_IN_FAILED:
             return {
                 ...state,
-                showSpinner: false
+                showSpinner: false,
+                error: action.error
             };
 
         case actionTypes.RE_SIGN_IN:

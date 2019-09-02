@@ -3,7 +3,7 @@ import axios from "axios";
 import { initChains } from "./index";
 import { initDates, initDatesSucceed } from "./dates";
 
-let API_KEY = "Ops i'm not gonna share this :(";
+let API_KEY = ":)";
 
 //fetching time zone
 export const fetchTimeZones = timeZones => {
@@ -29,19 +29,9 @@ export const signUpStart = () => {
     };
 };
 
-export const signUpSucceed = userData => {
-    localStorage.setItem("localId", userData.userId);
-    localStorage.setItem("idToken", userData.idToken);
-    localStorage.setItem(
-        "expiresIn",
-        new Date(new Date().getTime() + userData.expiresIn * 1000)
-    );
-    localStorage.setItem("username", userData.username);
-    localStorage.setItem("localZone", userData.localZone);
-
+export const signUpSucceed = () => {
     return {
-        type: actionTypes.SIGN_UP_SUCCEED,
-        userData: userData
+        type: actionTypes.SIGN_UP_SUCCEED
     };
 };
 
@@ -83,6 +73,22 @@ export const checkAuthTime = time => {
     };
 };
 
+// redirect to home
+export const resetRedirect = () => {
+    return dispatch => {
+        dispatch(redirect());
+        setTimeout(() => {
+            return dispatch(redirect());
+        }, 100);
+    };
+};
+
+export const redirect = () => {
+    return {
+        type: actionTypes.REDIRECT
+    };
+};
+
 export const signUpUser = data => {
     return dispatch => {
         dispatch(signUpStart());
@@ -103,20 +109,15 @@ export const signUpUser = data => {
                         localZone: data.localZone
                     })
                 );
-                dispatch(
-                    signUpSucceed({
-                        userId: res.data.localId,
-                        idToken: res.data.idToken,
-                        expiresIn: res.data.expiresIn,
-                        username: data.username,
-                        localZone: data.localZone
-                    })
-                );
 
-                dispatch(checkAuthTime(res.data.expiresIn));
+                dispatch(resetRedirect());
+                dispatch(signUpSucceed());
             })
 
-            .catch(error => dispatch(signUpFailed()));
+            .catch(error => {
+                console.log(error);
+                dispatch(signUpFailed(error));
+            });
     };
 };
 
@@ -131,7 +132,7 @@ export const reSignIn = () => {
     };
 };
 
-export const checkAuthState = () => {
+export const checkAuthState = isChainsNull => {
     return dispatch => {
         const idToken = localStorage.getItem("idToken");
         if (!idToken) {
@@ -147,9 +148,11 @@ export const checkAuthState = () => {
                     )
                 );
                 dispatch(reSignIn());
+
                 dispatch(
                     initChains(JSON.parse(localStorage.getItem("chains")))
                 );
+
                 dispatch(
                     initDatesSucceed(JSON.parse(localStorage.getItem("dates")))
                 );
@@ -192,9 +195,10 @@ export const signInSucceed = userData => {
     };
 };
 
-export const signInFailed = () => {
+export const signInFailed = error => {
     return {
-        type: actionTypes.SIGN_IN_FAILED
+        type: actionTypes.SIGN_IN_FAILED,
+        error: error
     };
 };
 
@@ -222,8 +226,9 @@ export const fetchUserData = userData => {
                         firebaseId: firebaseId
                     })
                 );
-                console.log(user.chains);
-                dispatch(initChains(user.chains));
+                if (!(typeof user.chains === "undefined")) {
+                    dispatch(initChains(user.chains));
+                }
                 dispatch(initDates(user.localZone));
             });
     };
@@ -244,8 +249,14 @@ export const signIn = signInData => {
             .then(res => {
                 dispatch(fetchUserData(res.data));
             })
-            .catch(err => {
-                dispatch(signInFailed());
+            .catch(error => {
+                dispatch(signInFailed(error));
             });
+    };
+};
+
+export const clearError = () => {
+    return {
+        type: actionTypes.CLEAR_ERROR
     };
 };

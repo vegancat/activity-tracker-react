@@ -1,0 +1,24 @@
+.Contact {
+    width: 80%;
+    margin: 1rem auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.LogoContainer {
+    width: 3rem;
+    height: 3rem;
+    outline: none;
+}
+
+.Logo {
+    width: 100%;
+    height: 100%;
+}
+
+.Info {
+    text-align: right;
+    font-size: 1.3rem;
+    font-family: "Open Sans", sans-serif;
+}

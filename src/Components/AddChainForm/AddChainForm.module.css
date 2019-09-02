@@ -37,3 +37,16 @@
     border-radius: 6px;
     text-align: center;
 }
+
+.DeleteButton {
+    outline: none;
+    width: 6rem;
+    font-family: "Open Sans", sans-serif;
+    font-size: 1.6rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    text-align: center;
+    background-color: #da6464;
+    color: black;
+}

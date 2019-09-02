@@ -7,9 +7,20 @@ export {
     storeChain,
     showForm,
     hideForm,
-    updateSelectedChain
+    updateSelectedChain,
+    editChain,
+    showEditForm,
+    hideEditForm,
+    deleteChain
 } from "./chains";
 
-export { initDates } from "./dates";
+export { initDates, addDates, addDatesSucceed } from "./dates";
 
-export { fetchZones, signUpUser, checkAuthState, signIn, logout } from "./auth";
+export {
+    fetchZones,
+    signUpUser,
+    checkAuthState,
+    signIn,
+    logout,
+    clearError
+} from "./auth";

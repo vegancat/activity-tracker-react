@@ -15,11 +15,12 @@ class Dates extends Component {
     }
 
     render() {
+        console.log(this.props.count);
         let dates = null;
         if (this.props.dates) {
             dates = (
                 <div className={classes.Dates}>
-                    {this.props.dates.map(date => {
+                    {this.props.dates.slice(0, this.props.count).map(date => {
                         return <DateIn key={date.date} date={date} />;
                     })}
                 </div>
@@ -31,8 +32,7 @@ class Dates extends Component {
 
 const mapStateToProps = state => {
     return {
-        localZone: state.auth.localZone,
-        dates: state.dates.dates
+        localZone: state.auth.localZone
     };
 };
 

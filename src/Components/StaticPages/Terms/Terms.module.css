@@ -1,0 +1,49 @@
+.Container {
+    margin: 0 auto;
+    width: 100%;
+    grid-area: main;
+    /* background-image: url("../../../assets/images/background/blured-background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover; */
+}
+
+.Terms {
+    width: 90%;
+    background: #95da5d;
+    color: black;
+    border: 2px solid white;
+    border-radius: 10px;
+    padding: 1rem;
+    margin: 1rem auto;
+    font-family: "Open Sans", sans-serif;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.ButtonContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+.Button {
+    outline: none;
+    display: block;
+    border: 1px solid white;
+    border-radius: 5px;
+    margin: 0 2rem;
+    padding: 1rem;
+    font-family: "Open Sans", sans-serif;
+    font-size: 1.2rem;
+    text-align: center;
+    text-decoration: none;
+    color: black;
+    background: #e46858;
+}
+
+@media (min-width: 43.75rem) {
+    .Terms {
+        width: 35rem;
+    }
+}

@@ -1,7 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import classes from "./SideDrawer.module.css";
 import NavigationItems from "../NavigationItems/NavigationItems";
+import logo from "../../assets/logo/logo.png";
 
 const sideDrawer = props => {
     const sideClasses = [classes.SideDrawer];
@@ -14,7 +16,9 @@ const sideDrawer = props => {
             className={sideClasses.join(" ")}
             onClick={props.onSideDrawerHandler}
         >
-            <div className={classes.Logo}>Logo</div>
+            <Link to="/" className={classes.LogoContainer}>
+                <img className={classes.Logo} src={logo} alt="logo" />
+            </Link>
             <div className={classes.NavLinks}>
                 <NavigationItems />
             </div>

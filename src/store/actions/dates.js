@@ -71,6 +71,36 @@ export const createDates = (startDate, timeData, count = 100, dateList) => {
     return dateList;
 };
 
+export const addDatesStart = () => {
+    return {
+        type: actionTypes.ADD_DATES_START
+    };
+};
+
+export const addDatesSucceed = () => {
+    return {
+        type: actionTypes.ADD_DATES_SUCCEED
+    };
+};
+
+export const addDates = (localZone, count) => {
+    return dispatch => {
+        axios
+            .get(`http://worldtimeapi.org/api/timezone/${localZone}`)
+            .then(res => {
+                const currentTime = new Date(res.data.datetime);
+                const newDateList = createDates(
+                    currentTime,
+                    res.data,
+                    count,
+                    []
+                );
+                dispatch(initDatesSucceed(newDateList));
+                dispatch(addDatesStart());
+            });
+    };
+};
+
 export const initDates = localZone => {
     return dispatch => {
         axios

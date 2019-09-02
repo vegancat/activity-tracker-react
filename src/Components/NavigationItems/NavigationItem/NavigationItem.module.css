@@ -2,10 +2,22 @@
     text-decoration: none;
     color: black;
     margin: 0 0.5rem;
+    height: 100%;
+    display: block;
+    padding: 0.8rem;
 }
 
 .Link:hover,
-.Link:active,
-.Link.active {
+.Link:active {
     color: #e6770f;
+}
+
+.Active {
+    background: #e6770f;
+}
+.Active:hover {
+    color: black;
+}
+.NavigationItem {
+    height: 100%;
 }

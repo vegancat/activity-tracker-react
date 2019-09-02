@@ -30,7 +30,7 @@ const checkValidty = (value, validation, anotherValue = null) => {
     }
 
     if (validation.isChainName) {
-        const chainNameReg = /^\w{1,25}$/;
+        const chainNameReg = /^\w[\w\s]{1,25}\w$/;
         isValid = isValid && chainNameReg.test(value);
     }
 

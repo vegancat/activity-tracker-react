@@ -1,6 +1,6 @@
 const setIngColor = len => {
     let color;
-    if (len == 0) {
+    if (len === 0) {
         color = "#ccc";
     } else if (len <= 5) {
         color = "#f1c40f";

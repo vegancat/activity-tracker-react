@@ -4,7 +4,8 @@ const initialState = {
     chains: null,
     showSpinner: false,
     shouldInitSelectedChain: true,
-    showSignInForm: false
+    showSignInForm: false,
+    showEditForm: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -25,6 +26,18 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 showSignInForm: false
+            };
+
+        case actionTypes.SHOW_EDIT_FORM:
+            return {
+                ...state,
+                showEditForm: true
+            };
+
+        case actionTypes.HIDE_EDIT_FORM:
+            return {
+                ...state,
+                showEditForm: false
             };
 
         case actionTypes.ADD_CHAIN_START:
@@ -64,6 +77,45 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 chains: action.updatedChains
             };
+
+        case actionTypes.EDIT_CHAIN_START:
+            return {
+                ...state,
+                showSpinner: true
+            };
+
+        case actionTypes.EDIT_CHAIN_SUCCEED:
+            return {
+                ...state,
+                chains: action.updatedChains,
+                showSpinner: false
+            };
+
+        case actionTypes.EDIT_CHAIN_FAILED:
+            return {
+                ...state,
+                showSpinner: false
+            };
+
+        case actionTypes.DELETE_CHAIN_START:
+            return {
+                ...state,
+                showSpinner: true
+            };
+
+        case actionTypes.DELETE_CHAIN_SUCCEED:
+            return {
+                ...state,
+                showSpinner: false,
+                chains: action.updatedChains
+            };
+
+        case actionTypes.DELETE_CHAIN_FAILED:
+            return {
+                ...state,
+                showSpinner: false
+            };
+
         default:
             return state;
     }

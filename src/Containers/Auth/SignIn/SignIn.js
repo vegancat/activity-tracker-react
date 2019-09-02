@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 import classes from "./SignIn.module.css";
 import Aux from "../../../hoc/Auxilliary/Auxilliary";
@@ -37,7 +38,16 @@ class SignIn extends Component {
     };
 
     render() {
-        let button = <button className={classes.Button}>Sign In</button>;
+        let button = (
+            <div className={classes.Buttons}>
+                <button className={classes.Button}>Sign In</button>
+                <div>
+                    <Link to="/auth" className={classes.SignUp}>
+                        Sign Up
+                    </Link>
+                </div>
+            </div>
+        );
         if (this.props.showSpinner) {
             button = (
                 <div className={classes.Spinner}>

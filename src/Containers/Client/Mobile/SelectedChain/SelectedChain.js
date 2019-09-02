@@ -8,14 +8,13 @@ import initSelectedChain from "../../../../utils/initSelectedChain";
 
 class SelectedChain extends Component {
     state = {
-        ingredients: null,
-        shouldInitIngs: true
+        ingredients: null
     };
 
     componentDidMount() {
         let ingredients = [];
         let ingKey;
-        for (let date of this.props.dates) {
+        for (let date of this.props.dates.slice(0, this.props.count)) {
             ingKey = `ing${date.year}${date.month[1]}${date.dayOfMonth}`;
             ingredients.push({
                 ingKey: ingKey,
@@ -25,8 +24,7 @@ class SelectedChain extends Component {
             });
         }
         this.setState({
-            ingredients: ingredients,
-            shouldInitIngs: false
+            ingredients: ingredients
         });
     }
 
@@ -43,22 +41,41 @@ class SelectedChain extends Component {
             this.setState({ ingredients: updatedIngs });
             this.props.initSucceed();
         }
+
+        if (this.props.shouldAddDates) {
+            let ingredients = [];
+            let ingKey;
+            for (let date of this.props.dates.slice(0, this.props.count)) {
+                ingKey = `ing${date.year}${date.month[1]}${date.dayOfMonth}`;
+                ingredients.push({
+                    ingKey: ingKey,
+                    state: false,
+                    color: "#ccc",
+                    condition: "None"
+                });
+            }
+            let updatedIngs = initSelectedChain(ingredients, this.props.ings);
+            this.setState({ ingredients: updatedIngs });
+            this.props.addDatesSucceed();
+        }
     }
 
     render() {
         let ingredients = null;
         if (this.state.ingredients) {
-            ingredients = this.state.ingredients.map(ingredient => {
-                return (
-                    <Ingredient
-                        key={ingredient.ingKey}
-                        ingKey={ingredient.ingKey}
-                        color={ingredient.color}
-                        condition={ingredient.condition}
-                        onIngredientClick={this.ingredientClickHandler}
-                    />
-                );
-            });
+            ingredients = this.state.ingredients
+                .slice(0, this.props.count)
+                .map(ingredient => {
+                    return (
+                        <Ingredient
+                            key={ingredient.ingKey}
+                            ingKey={ingredient.ingKey}
+                            color={ingredient.color}
+                            condition={ingredient.condition}
+                            onIngredientClick={this.ingredientClickHandler}
+                        />
+                    );
+                });
         }
         return ingredients;
     }
@@ -82,10 +99,10 @@ class SelectedChain extends Component {
 
 const mapStateToProps = state => {
     return {
-        dates: state.dates.dates,
         shouldInitChain: state.chains.shouldInitSelectedChain,
         firebaseId: state.auth.firebaseId,
-        chains: state.chains.chains
+        chains: state.chains.chains,
+        shouldAddDates: state.dates.shouldAddDates
     };
 };
 
@@ -101,7 +118,8 @@ const mapDispatchToProps = dispatch => {
                     fetchedChains,
                     chainKey
                 )
-            )
+            ),
+        addDatesSucceed: () => dispatch(actions.addDatesSucceed())
     };
 };
 

@@ -9,10 +9,13 @@ const footer = props => {
             <nav>
                 <ul>
                     <li>
-                        <Link to="/auth">Authentication</Link>
+                        <Link to="/behind-scene">Behind the Scene!</Link>
                     </li>
                     <li>
                         <Link to="/terms">Terms of use</Link>
+                    </li>
+                    <li>
+                        <Link to="/contacts">Contact with me</Link>
                     </li>
                 </ul>
             </nav>
