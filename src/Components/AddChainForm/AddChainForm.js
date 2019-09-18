@@ -47,7 +47,7 @@ const addChainForm = props => {
                         <div
                             style={{
                                 textAlign: "center",
-                                marginTop: "2rem",
+                                marginTop: "0.2rem",
                                 fontFamily: '"Open Sans", sans-serif',
                                 fontSize: "1.4rem"
                             }}

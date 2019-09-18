@@ -86,7 +86,7 @@ export const addDatesSucceed = () => {
 export const addDates = (localZone, count) => {
     return dispatch => {
         axios
-            .get(`http://worldtimeapi.org/api/timezone/${localZone}`)
+            .get(`https://worldtimeapi.org/api/timezone/${localZone}`)
             .then(res => {
                 const currentTime = new Date(res.data.datetime);
                 const newDateList = createDates(
@@ -104,7 +104,7 @@ export const addDates = (localZone, count) => {
 export const initDates = localZone => {
     return dispatch => {
         axios
-            .get(`http://worldtimeapi.org/api/timezone/${localZone}`)
+            .get(`https://worldtimeapi.org/api/timezone/${localZone}`)
             .then(res => {
                 const currentTime = new Date(res.data.datetime);
                 const newDateList = createDates(currentTime, res.data, 100, []);

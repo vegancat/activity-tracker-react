@@ -9,7 +9,7 @@ const checkValidty = (value, validation, anotherValue = null) => {
     }
 
     if (validation.isEmail) {
-        const emailReg = /^\w+@[a-zA-Z]+\.[a-z]{2,5}$/;
+        const emailReg = /^[\w\.]{5,}@[a-zA-Z]+\.[a-z]{2,5}$/;
         const result = emailReg.test(value);
         isValid = isValid && result;
     }

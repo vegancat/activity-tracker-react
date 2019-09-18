@@ -3,7 +3,7 @@ import axios from "axios";
 import { initChains } from "./index";
 import { initDates, initDatesSucceed } from "./dates";
 
-let API_KEY = ":)";
+let API_KEY = "AIzaSyApduN0lRUQC9poX9rNAWSBhf0jtBHhly8";
 
 //fetching time zone
 export const fetchTimeZones = timeZones => {
@@ -16,7 +16,7 @@ export const fetchTimeZones = timeZones => {
 export const fetchZones = () => {
     return dispatch => {
         axios
-            .get("http://worldtimeapi.org/api/timezone")
+            .get("https://worldtimeapi.org/api/timezone")
             .then(res => dispatch(fetchTimeZones(res.data)))
             .catch(error => console.log(error));
     };
@@ -41,13 +41,16 @@ export const signUpFailed = () => {
     };
 };
 
-export const registerOnDatabase = userData => {
+export const registerOnDatabase = ({register: userData, signIn: signInData}) => {
     return dispatch => {
         axios
             .post(
                 "https://activity-checker.firebaseio.com/users.json",
                 userData
             )
+            .then(res => {
+                dispatch(signIn(signInData))
+            })
             .catch(error => console.log(error));
     };
 };
@@ -104,13 +107,19 @@ export const signUpUser = data => {
             .then(res => {
                 dispatch(
                     registerOnDatabase({
-                        userId: res.data.localId,
-                        username: data.username,
-                        localZone: data.localZone
+                        register: {
+                            userId: res.data.localId,
+                            username: data.username,
+                            localZone: data.localZone
+                        },
+                        signIn: {
+                            email: data.email,
+                            password: data.password
+                        }
                     })
                 );
 
-                dispatch(resetRedirect());
+                // dispatch(resetRedirect());
                 dispatch(signUpSucceed());
             })
 

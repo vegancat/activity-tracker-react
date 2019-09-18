@@ -1,7 +1,10 @@
 .Container {
     grid-area: main;
     width: 100%;
-    background: #545455;
+    background-image: url("../../../assets/images/background/blured-background.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
 .SideBar {
@@ -24,7 +27,7 @@
 }
 
 .Description {
-    width: 90%;
+    width: 100%;
     padding: 1rem;
     margin: 1rem auto;
     text-align: left;

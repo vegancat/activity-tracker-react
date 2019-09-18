@@ -1,6 +1,6 @@
 .Modal {
     position: fixed;
-    bottom: calc(50%);
+    bottom: 1rem;
     left: calc(50% - 8rem);
     width: 16rem;
     height: auto;
@@ -10,9 +10,27 @@
     vertical-align: middle;
     padding: 1rem;
     transform: translateX(-400%);
-    transition: all 0.4s linear;
+    transition: transform 0.4s linear;
 }
 
 .Open {
     transform: translateX(0);
+}
+
+@media screen and (min-width: 26.5625rem){
+    .Modal {
+        bottom: 3rem;
+    }
+}
+
+@media screen and (min-width: 40rem){
+    .Modal {
+        bottom: 7rem;
+    }
+}
+
+@media screen and (min-width: 48rem){
+    .Modal {
+        bottom: 13rem;
+    }
 }

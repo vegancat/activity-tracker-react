@@ -25,7 +25,7 @@ const behindScene = () => {
                     Mahdi loves the{" "}
                     <strong>
                         nature, cats, science, Space, computers, DNA, evolution,
-                        books, dance, adventures and herself
+                        books, dance, adventures and himself
                         <span role="img" aria-label="cool">
                             😎
                         </span>
